@@ -1,0 +1,27 @@
+server:
+  port: 8088
+spring:
+  mail:
+    host: smtp.163.com
+    port: 465
+    username: 你的邮箱
+    password: 邮箱授权码
+    protocol: smtps
+mail:
+  weather:
+    apiUrl: http://apis.juhe.cn/simpleWeather/query
+    apiKey: 聚合数据的apiKey
+  user:
+    list:
+      -
+        name: 圆圆
+        mailAddress: 圆圆的邮箱
+      -
+        name: 壮壮
+        mailAddress: 壮壮的邮箱
+      -
+        name: 旺仔
+        mailAddress: 旺仔的邮箱
+news:
+  key: 微秘书的key
+
