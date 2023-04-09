@@ -3,6 +3,7 @@ package com.mundane.mail.task;
 import com.mundane.mail.pojo.Weather;
 import com.mundane.mail.service.ScheduleService;
 import com.mundane.mail.service.WeatherService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
+@Slf4j
 public class WeatherTask {
 
     @Autowired
@@ -25,11 +27,11 @@ public class WeatherTask {
             String weatherStr = weather.getWeather();
             if (weatherStr.contains("雨") || weatherStr.contains("雪") || weatherStr.contains("雷")) {
                 scheduleService.send(weather);
-                System.out.println("发送成功");
+                log.info("发送成功");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("发送失败");
+            log.info("发送失败");
         }
     }
 }

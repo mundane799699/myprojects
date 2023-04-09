@@ -2,6 +2,7 @@ package com.mundane.mail.service;
 
 import com.mundane.mail.utils.HttpTool;
 import com.mundane.mail.utils.SpiderUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.CookieSpecs;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class NewsService {
 
@@ -95,7 +97,7 @@ public class NewsService {
                 liList = liList.next();
             }
         } catch (Exception e) {
-            System.out.println("解析微信公众号最新文章跳转链接出错，error: {}" + e.getMessage());
+            log.info("解析微信公众号最新文章跳转链接出错，error: {}" + e.getMessage());
         }
 
         if (articleLink != null && articleLink.startsWith("/link")) {

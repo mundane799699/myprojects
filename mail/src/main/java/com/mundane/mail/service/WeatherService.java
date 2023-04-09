@@ -6,6 +6,7 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.mundane.mail.config.WeatherConfig;
 import com.mundane.mail.pojo.Weather;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 @EnableConfigurationProperties(WeatherConfig.class)
 public class WeatherService {
@@ -37,7 +39,7 @@ public class WeatherService {
             JSONObject response = new JSONObject(responseJsonStr);
             int error_code = response.getInt("error_code");
             if (error_code == 0) {
-                System.out.println("调用接口成功");
+                log.info("调用接口成功");
 
                 JSONObject result = response.getJSONObject("result");
                 JSONArray future = result.getJSONArray("future");
@@ -63,7 +65,7 @@ public class WeatherService {
                 }
                 return null;
             } else {
-                System.out.println("调用接口失败：" + response.getStr("reason"));
+                log.info("调用接口失败：" + response.getStr("reason"));
                 return null;
             }
         } catch (Exception e) {

@@ -35,4 +35,18 @@ public class MailService {
             }
         }
     }
+
+    public void reportPictureUpdated() {
+        SimpleMailMessage message = new SimpleMailMessage();
+        // 谁发的
+        message.setFrom("mundane799699@163.com");
+        // 谁要接收
+        message.setTo("799699348@qq.com");
+        // 邮件标题
+        message.setSubject("美女图更新");
+        String newText = "亲爱的圆圆，美女图片有更新啦！";
+        // 邮件内容
+        message.setText(newText);
+        mailSender.send(message);
+    }
 }

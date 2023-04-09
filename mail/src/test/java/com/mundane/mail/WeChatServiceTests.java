@@ -12,7 +12,13 @@ public class WeChatServiceTests {
 
     @Test
     public void testSend() {
-        String msg = "测试";
-        weChatService.sendToRoom(msg, "有钱才算自由");
+        String imgUrl = "https://www.ikanins.com/wp-content/uploads/2023/02/www.ikanins.com-josephine-xuan-276320962-1182215499256171-3542951419705338970-n-940x1174.jpg";
+        weChatService.sendImg(imgUrl, "有钱才算自由");
+    }
+
+    @Test
+    public void testSendText() {
+        String text = "测试";
+        weChatService.sendText(text, "有钱才算自由");
     }
 }

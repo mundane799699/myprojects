@@ -1,16 +1,16 @@
 package com.mundane.mail.utils;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
-import com.mundane.mail.pojo.Resp;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.*;
 
+@Slf4j
 public class SpiderUtil {
     // 微信公众号文章域名
     private static final String HTTP_WX_DOMAIN = "http://mp.weixin.qq.com";
@@ -54,7 +54,7 @@ public class SpiderUtil {
     public static void main(String args[]) {
         String url = "http://mp.weixin.qq.com/s?src=11&timestamp=1677229696&ver=4370&signature=YaS6okAGM0viJ6ZpLsMjqzwN-9OXIiMnnOOpWi37bYoK8N77zFC5Wdarp-dfYeA*8DiEjMD9Ahr7mzWSYslK5FXz5QREtFIAoWbyMaGCxNTD8gUrYOAAFXgaIS5mdvEp&new=1";
         String resp = getArticle(url);
-        System.out.println(resp);
+        log.info(resp);
     }
 
 

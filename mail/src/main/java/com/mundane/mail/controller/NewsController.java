@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/news")
+@RequestMapping("/mail/news")
 public class NewsController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class NewsController {
     public String sendWeatherReport() {
         try {
             String news = newsService.getNews();
-            weChatService.sendToRoom(news, "有钱才算自由");
+            weChatService.sendNewsToGroup(news);
         } catch (Exception e) {
             e.printStackTrace();
             return "发送失败";
