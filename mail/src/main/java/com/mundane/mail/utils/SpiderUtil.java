@@ -60,28 +60,30 @@ public class SpiderUtil {
 
     private static String getWxArticleContent(String resp) {
         try {
-            List<String> returnList = new ArrayList<>();
+            StringBuilder sb = new StringBuilder();
             Document document = Jsoup.parse(resp);
             Element content = document.getElementsByClass("rich_media_area_primary_inner").get(0);
             Elements sections = content.select("div#js_content > section > section[data-role=outer]");
+            // 现在有3个outer, 文本在中间一个outer中
             for (int i = 0; i < sections.size(); i++) {
-                Element resultSection = sections.get(i);
-                for (int j = 0; j < resultSection.childNodeSize(); j++) {
-                    Element child = resultSection.child(j);
-                    String str = getStrFromChild(child);
-                    if (StringUtils.isNotEmpty(str)) {
-                        returnList.add(str);
-                    }
+                Element section = sections.get(i);
+                String sectionStr = getStrFromChild(section);
+                if (StringUtils.isNotEmpty(sectionStr)) {
+                    sb.append(sectionStr);
                 }
             }
-            if (CollectionUtil.isEmpty(returnList)) {
+            String result = sb.toString();
+            if (StringUtils.isEmpty(result)) {
                 return "";
             }
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < returnList.size(); i++) {
-                sb.append(returnList.get(i));
-                if (i != returnList.size() - 1) {
+            String[] array = result.split(" ");
+            sb = new StringBuilder();
+            for (int i = 0; i < array.length; i++) {
+                String s = array[i];
+                sb.append(s);
+                if (i <= 1) {
+                    sb.append(" ");
+                } else if (i < array.length - 1) {
                     sb.append("\n\n");
                 }
             }
@@ -93,11 +95,7 @@ public class SpiderUtil {
     }
 
     private static String getStrFromChild(Element element) {
-        StringBuilder sb = new StringBuilder();
-        for (Element child : element.children()) {
-            sb.append(child.text());
-        }
-        String s = sb.toString();
+        String s = element.text();
         s = s.replaceAll("微信搜:每日资讯简报", "");
         return s;
     }

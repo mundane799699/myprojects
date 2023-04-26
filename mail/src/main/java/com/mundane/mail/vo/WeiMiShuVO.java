@@ -1,4 +1,4 @@
-package com.mundane.mail.pojo;
+package com.mundane.mail.vo;
 
 import lombok.Data;
 

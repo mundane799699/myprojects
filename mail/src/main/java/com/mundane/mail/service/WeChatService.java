@@ -2,7 +2,7 @@ package com.mundane.mail.service;
 
 import cn.hutool.json.JSONObject;
 import com.mundane.mail.config.WeiMiShuConfig;
-import com.mundane.mail.pojo.WeiMiShuVO;
+import com.mundane.mail.vo.WeiMiShuVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

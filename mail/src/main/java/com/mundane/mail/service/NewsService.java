@@ -45,14 +45,17 @@ public class NewsService {
         String webchatListResp = HttpTool.get(url, getSoGouHeaderMap(snuid));
         //解析最新文章的跳转链接 link?url=dn9a_-gY295K0Rci_xozVXfdMkSQTLW6cwJThYulHEtVjXrGTiVgSzeeEp_hLeB2yqXURLyfUtLrJXD1_0k9nVqXa8Fplpd9zzyQJTTG4l0_9qb01isMvlZ64lZu95gQIMueGIVv5d1dqVpT_pMk4offWRUgcoizEACiaxkcwhvTWNDOS5z7xv1sl3spDge3bn9dTu5NB8apP4DxpTPU2JJXAvEOlBkhNcfvnKsLq2y_fex_FvLObSeMu8iyJiWt4mSINg6uUw7I3OTRHYU2og..&amp;type=1&amp;query=36%E6%B0%AA&amp;token=67498C9B4AEFECA0CACC0A62E51D7A8ACA9C78CD60B61980
         String sougouLink = parseArticleLink(webchatListResp, wechatName);
+        log.info("sougouLink = {}", sougouLink);
         return downloadWechatArticle(sougouLink);
     }
 
     private String downloadWechatArticle(String sougouLink) {
         String snuid = getSnuid();
         String linkResp = HttpTool.get(sougouLink, getSoGouHeaderMap(snuid));
+        log.info("linkResp = {}", linkResp);
         // 得到https://mp.weixin.qq.com/s?src=11&timestamp=1622537971&ver=3103&signature=-I-7L0hCDOh1LfBwKNDSpjZ1sUYizUM0P8Rbn5XJddf21B3mRfF*BCmJF9AdrZ0T3PjQkZgQ0rS*5tk0NAN*BvKliGSVCAhgDP5Y2ScozkF8tGp07aecT-9yqxUEBlrU&new=1
         String weChatArticleUrl = getWechatArticleUrl(linkResp);
+        log.info("weChatArticleUrl = {}", weChatArticleUrl);
         // 解析微信文章内容
         String articleResp = SpiderUtil.getArticle(weChatArticleUrl);
         return articleResp;

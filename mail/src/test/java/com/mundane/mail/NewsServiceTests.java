@@ -21,6 +21,6 @@ public class NewsServiceTests {
     public void testGetNews() {
         String news = newsService.getNews();
         log.info(news);
-        weChatService.sendText(news, "有钱才算自由");
+        weChatService.sendText(news, "自律行动二人组");
     }
 }

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mundane.mail.mapper.RedBookCollectMapper">
+    <select id="findByNoteId" resultType="com.mundane.mail.pojo.RedBookCollectEntity">
+        SELECT * FROM tb_redbook_collect WHERE note_id = #{id}
+    </select>
+
+    <insert id="batchAddOrUpdate" parameterType="java.util.List">
+        insert into tb_redbook_collect(
+        user_id,
+        note_id,
+        display_title,
+        `type`,
+        cover_url,
+        owner_id,
+        owner_nickname,
+        owner_avatar,
+        liked,
+        liked_count,
+        create_date,
+        create_time,
+        update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.userId},
+            #{item.noteId},
+            #{item.displayTitle},
+            #{item.type},
+            #{item.coverUrl},
+            #{item.ownerId},
+            #{item.ownerNickname},
+            #{item.ownerAvatar},
+            #{item.liked},
+            #{item.likedCount},
+            current_date(),
+            now(),
+            now()
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        display_title=VALUES(display_title),
+        cover_url=VALUES(cover_url),
+        owner_nickname=VALUES(owner_nickname),
+        owner_avatar=VALUES(owner_avatar),
+        liked=VALUES(liked),
+        liked_count=VALUES(liked_count),
+        update_time=now()
+    </insert>
+
+    <select id="queryAllByUserId" resultType="com.mundane.mail.pojo.RedBookCollectEntity">
+        select
+            user_id,
+            note_id,
+            display_title,
+            `type`,
+            cover_url,
+            owner_id,
+            owner_nickname,
+            owner_avatar,
+            liked,
+            liked_count
+        from
+            tb_redbook_collect
+        <where>
+            user_id = #{userId}
+        </where>
+        order by
+            create_date desc,
+            create_time asc
+    </select>
+
+    <select id="queryByUserId" resultType="com.mundane.mail.pojo.RedBookCollectEntity">
+        select
+            user_id,
+            note_id,
+            display_title,
+            `type`,
+            cover_url,
+            owner_id,
+            owner_nickname,
+            owner_avatar,
+            liked,
+            liked_count
+        from
+            tb_redbook_collect
+            <where>
+                user_id = #{userId}
+                <if test="displayTitle != null and displayTitle != ''">
+                    and LOWER(display_title) LIKE LOWER(concat('%', #{displayTitle}, '%'))
+                </if>
+                <if test="ownerNickname != null and ownerNickname != ''">
+                    and LOWER(owner_nickname) LIKE LOWER(concat('%', #{ownerNickname}, '%'))
+                </if>
+            </where>
+        order by
+            create_date desc,
+            create_time asc
+    </select>
+
+    <delete id="deleteByUserId">
+        delete from tb_redbook_collect
+        <where>
+            user_id = #{userId}
+        </where>
+    </delete>
+
+</mapper>
