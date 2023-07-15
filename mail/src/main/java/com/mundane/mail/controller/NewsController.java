@@ -28,4 +28,17 @@ public class NewsController {
         }
         return "发送成功";
     }
+
+    @GetMapping("/get")
+    public String getNews() {
+        try {
+            String news = newsService.getNews();
+            return news;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "提取新闻失败";
+        }
+    }
+
+
 }
